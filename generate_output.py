@@ -25,7 +25,7 @@ def generate_json():
                     "&lat="+str(row["latitud"])+
                     "&lon="+str(row["longitud"])+
                     "&alt="+str(row["altitud"])+
-                    "&name="+urllib.parse.quote(row["nom descriptiu"]))
+                    "&desc="+urllib.parse.quote(row["nom descriptiu"]))
         nueva_fila = {"url": report_url+endpoint}
         df.loc[index, 'url'] = nueva_fila['url']  
     # Suponiendo que df ya contiene los datos

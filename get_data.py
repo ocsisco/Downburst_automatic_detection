@@ -56,6 +56,7 @@ def get_data_AVAMET(date=None):
             twelve_hours_ago = now - timedelta(hours=12)
             all_days = all_days[all_days['data ini'] >= twelve_hours_ago]
 
+        all_days = all_days.drop_duplicates()
         all_days.to_csv("dataset_AVAMET.csv", index=False)
         print(all_days)
 
