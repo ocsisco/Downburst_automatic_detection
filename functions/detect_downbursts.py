@@ -174,7 +174,10 @@ def search_downbursts():
         on=["data ini", "codi", 'vent gra_mit', 'vent vel_mit', 'vent vel_max', 'temp mit_mit',
         'hrel mit_mit', 'pres mit_mit', 'prec tot_sum', 'prec tot', 'latitud',
         'longitud', 'altitud', 'nom descriptiu', 'autoritza?'], how='inner'), dfs)
-    except: return output_df, print(output_df)
+    except:
+        output_df = output_df.drop_duplicates()
+        output_df.to_csv("data/downbursts.csv")
+        return output_df, print(output_df)
     
     # Eliminamos todos los registros quedandonos con solo aquellos que tienen la racha máxima de cada estación.
     codis = get_station_codes(df_common)
@@ -188,8 +191,7 @@ def search_downbursts():
 
     output_df = output_df.drop_duplicates()
     output_df.to_csv("data/downbursts.csv")
-    print(output_df)
-    return output_df
+    return output_df, print(output_df)
 
 
 

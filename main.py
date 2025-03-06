@@ -21,7 +21,7 @@ while True:
     except: print("[bold red]- No se ha podido generar el archivo.json[/bold red]")
 
     try: print(""), print("[bold green]- Enviando json por ftp al servidor web[/bold green]"), send_data()
-    except: print("[bold red]- No se ha podido enviar el archivo.json[/bold red]")
+    except: print("[bold red]- No se ha podido enviar el archivo .json[/bold red]")
 
     print("")
     print("[bold green]_________ END LOOP __________[/bold green]")
