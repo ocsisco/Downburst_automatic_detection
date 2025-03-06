@@ -6,24 +6,27 @@ from rich.console import Console
 
 
 
-def get_data_AVAMET():
+def get_data_AVAMET(date=None):
     print(" ")
     console = Console()
     with console.status("[cyan]Downloading AVAMET data...[/cyan]") as status:
         load_dotenv()
         token = os.getenv("AVAMET_PASSWORD")
-        now = pd.to_datetime("now")
-        one_day_earlier = now - timedelta(days=1)
-        today = now.strftime('%Y-%m-%d')
-        yesterday = one_day_earlier.strftime('%Y-%m-%d')
         all_days = pd.DataFrame()
+
+        if not date:
+            now = pd.to_datetime("now")
+            one_day_earlier = now - timedelta(days=1)
+            today = now.strftime('%Y-%m-%d')
+            yesterday = one_day_earlier.strftime('%Y-%m-%d')
+            
+        else:
+            today,yesterday = date,date
 
         for date in [yesterday,today]:
 
             df = pd.DataFrame()
-            try:
-                data = pd.read_html("https://www.avamet.org/mxo-consulta-diaria.php?id=c%&ini="+date+"&fin="+date+"&token="+token, decimal=",")
-                #data = pd.read_html("https://www.avamet.org/mxo-consulta-diaria.php?id=c%&ini="+"2024-06-08"+"&fin="+"2024-06-08"+"&token="+token, decimal=",")
+            try: data = pd.read_html("https://www.avamet.org/mxo-consulta-diaria.php?id=c%&ini="+date+"&fin="+date+"&token="+token, decimal=",")
             except: df.to_csv("dataset_AVAMET.csv", index=False)
 
             metadata = data[0]
@@ -49,11 +52,13 @@ def get_data_AVAMET():
             print(date+" downloaded")
             all_days = pd.concat([all_days,df], axis=0)
 
-        twelve_hours_ago = now - timedelta(hours=12)
-        all_days = all_days[all_days['data ini'] >= twelve_hours_ago]
+        if not date:
+            twelve_hours_ago = now - timedelta(hours=12)
+            all_days = all_days[all_days['data ini'] >= twelve_hours_ago]
+
         all_days.to_csv("dataset_AVAMET.csv", index=False)
         print(all_days)
 
 
 if __name__=="__main__":
-    get_data_AVAMET()
+    get_data_AVAMET("2024-06-08")

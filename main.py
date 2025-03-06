@@ -5,7 +5,6 @@ from time import sleep
 from rich import print
 
 
-
 while True:
     
     try: print(""), print("[bold green]- Descargando datos de AVAMET[/bold green]"), get_data_AVAMET()
@@ -21,4 +20,3 @@ while True:
     print("[bold green]_________ END LOOP __________[/bold green]")
     print("")
     sleep(10)
-
