@@ -1,6 +1,7 @@
 from functions.get_data import get_data_AVAMET
 from functions.detect_downbursts import search_downbursts
 from functions.generate_output import generate_json
+from functions.send_json_to_website import send_data
 from time import sleep
 from rich import print
 import yaml
@@ -18,6 +19,9 @@ while True:
 
     try: print(""), print("[bold green]- Generando json para api[/bold green]"), generate_json()
     except: print("[bold red]- No se ha podido generar el archivo.json[/bold red]")
+
+    try: print(""), print("[bold green]- Enviando json por ftp al servidor web[/bold green]"), send_data()
+    except: print("[bold red]- No se ha podido enviar el archivo.json[/bold red]")
 
     print("")
     print("[bold green]_________ END LOOP __________[/bold green]")
