@@ -1,7 +1,7 @@
 # Configuración general
-data:
+date: null #"2024-06-08"  # Date in format YYYY-MM-DD, date for testing dates or null for production
+sleep_time: 300  # Time in seconds to sleep between requests
 
-  date: "2024-06-08"  # Date in format YYYY-MM-DD for testing dates or null for production
 
 # Configuración del modelo de detección
 detection:
