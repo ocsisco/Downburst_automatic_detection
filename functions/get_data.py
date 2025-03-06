@@ -12,6 +12,7 @@ def get_data_AVAMET():
     with open("config.yml", "r") as file:
         config = yaml.safe_load(file)
     date = config["date"]
+    size_in_hours = config["size_of_dataset"]
 
     print(" ")
     console = Console()
@@ -59,7 +60,7 @@ def get_data_AVAMET():
             all_days = pd.concat([all_days,df], axis=0)
 
         if not date:
-            twelve_hours_ago = now - timedelta(hours=12)
+            twelve_hours_ago = now - timedelta(hours=size_in_hours)
             all_days = all_days[all_days['data ini'] >= twelve_hours_ago]
 
         all_days = all_days.drop_duplicates()

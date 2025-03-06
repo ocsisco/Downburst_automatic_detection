@@ -1,6 +1,7 @@
 # Configuración general
 date: null #"2024-06-08"  # Date in format YYYY-MM-DD, date for testing dates or null for production
 sleep_time: 300  # Time in seconds to sleep between requests
+size_of_dataset: 2  # Size of the dataset to be analyzed in n last hours
 
 
 # Configuración del modelo de detección
