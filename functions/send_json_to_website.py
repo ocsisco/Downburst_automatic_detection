@@ -13,7 +13,7 @@ def send_data():
 
     # Datos del servidor FTP
     archivo_local = "data/downbursts.json"  # Archivo que quieres subir
-    archivo_remoto = "downbursts.json"  # Nombre en el servidor
+    archivo_remoto = "data/downbursts.json"  # Nombre en el servidor
 
     # Conectar al servidor FTP
     ftp = FTP(FTP_HOST)
