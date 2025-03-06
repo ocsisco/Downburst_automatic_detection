@@ -3,3 +3,4 @@
 data/dataset_AVAMET.csv
 data/downbursts.csv
 /venv
+*.pyc
