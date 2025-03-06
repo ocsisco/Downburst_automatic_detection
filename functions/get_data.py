@@ -25,15 +25,14 @@ def get_data_AVAMET():
             now = pd.to_datetime("now")
             one_day_earlier = now - timedelta(days=1)
             today = now.strftime('%Y-%m-%d')
-            yesterday = one_day_earlier.strftime('%Y-%m-%d')
-            
+            yesterday = one_day_earlier.strftime('%Y-%m-%d')  
         else:
             today,yesterday = date,date
 
-        for date in [yesterday,today]:
+        for day in [yesterday,today]:
 
             df = pd.DataFrame()
-            try: data = pd.read_html("https://www.avamet.org/mxo-consulta-diaria.php?id=c%&ini="+date+"&fin="+date+"&token="+token, decimal=",")
+            try: data = pd.read_html("https://www.avamet.org/mxo-consulta-diaria.php?id=c%&ini="+day+"&fin="+day+"&token="+token, decimal=",")
             except: df.to_csv("data/dataset_AVAMET.csv", index=False)
 
             metadata = data[0]
@@ -56,7 +55,7 @@ def get_data_AVAMET():
             df["prec tot"] =        df["prec tot"]/100
             df["data ini"] =        pd.to_datetime(df["data ini"])
 
-            print(date+" downloaded")
+            print(day+" downloaded")
             all_days = pd.concat([all_days,df], axis=0)
 
         if not date:
