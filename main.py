@@ -7,7 +7,7 @@ from rich import print
 
 while True:
     
-    try: print(""), print("[bold green]- Descargando datos de AVAMET[/bold green]"), get_data_AVAMET()
+    try: print(""), print("[bold green]- Descargando datos de AVAMET[/bold green]"), get_data_AVAMET("2024-06-08") # "2024-06-08"
     except: print("[bold red]- No se han podido descargar los datos[/bold red]")
 
     try: print(""), print("[bold green]- Buscando downbursts en el dataset[/bold green]"), search_downbursts()

@@ -1,5 +1,6 @@
 /.env
 /__pycache__
 /dataset_AVAMET.csv
+/downbursts.csv
 /datos.json
 /venv
