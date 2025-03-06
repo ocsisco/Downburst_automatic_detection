@@ -1,6 +1,6 @@
-from get_data import get_data_AVAMET
-from detect_downbursts import search_downbursts
-from generate_output import generate_json
+from functions.get_data import get_data_AVAMET
+from functions.detect_downbursts import search_downbursts
+from functions.generate_output import generate_json
 from time import sleep
 from rich import print
 
