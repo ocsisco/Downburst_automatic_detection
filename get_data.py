@@ -3,10 +3,16 @@ from datetime import timedelta
 import os
 from dotenv import load_dotenv
 from rich.console import Console
+import yaml
 
 
+def get_data_AVAMET():
 
-def get_data_AVAMET(date=None):
+    # Cargar configuración desde config.yml
+    with open("config.yml", "r") as file:
+        config = yaml.safe_load(file)
+    date = config["data"]["date"]
+
     print(" ")
     console = Console()
     with console.status("[cyan]Downloading AVAMET data...[/cyan]") as status:

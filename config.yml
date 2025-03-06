@@ -1,10 +1,34 @@
 # Configuración general
 data:
-  date: null # "2024-06-08"  # Date in format YYYY-MM-DD for testing dates or null for production
+
+  date: "2024-06-08"  # Date in format YYYY-MM-DD for testing dates or null for production
 
 # Configuración del modelo de detección
 detection:
-  min_ws: 70 # Minimal 
-  threshold: 0.8  # Umbral de detección
-  window_size: 5  # Tamaño de la ventana para análisis
-  remove_duplicates: true  # Eliminar duplicados en el procesamiento
+
+  min_ws: 70 # Viento minimo a considerar
+
+  vent_vel_max: # Configuración de la variable de viento máximo
+    threshold: 30  # Umbral de detección
+    time_interval: "60min"  # Intervalo de tiempo para análisis
+    only_increase: true  # Solo detectar incrementos 
+  
+  vent_vel_mit: # Configuración de la variable de viento medio
+    threshold: 20  # Umbral de detección
+    time_interval: "60min"  # Intervalo de tiempo para análisis
+    only_increase: true  # Solo detectar incrementos
+
+  hrel_mit_mit: # Configuración de la variable de humedad relativa media
+    threshold: 5  # Umbral de detección
+    time_interval: "30min"  # Intervalo de tiempo para análisis
+    only_increase: false  # Solo detectar incrementos  
+
+  temp_mit_mit: # Configuración de la variable de temperatura media
+    threshold: 0  # Umbral de detección
+    time_interval: "30min"  # Intervalo de tiempo para análisis
+    only_increase: false  # Solo detectar incrementos
+
+  prec_tot_sum: # Configuración de la variable de precipitación total
+    threshold: 0  # Umbral de detección
+    time_interval: "60min"  # Intervalo de tiempo para análisis
+    only_increase: true  # Solo detectar incrementos 

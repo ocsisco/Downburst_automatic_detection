@@ -1,7 +1,7 @@
 import pandas as pd
 from functools import reduce
 from rich.progress import Progress
-
+import yaml
 
 
 def get_station_codes(df):
@@ -103,9 +103,14 @@ def search_downbursts():
     racha máxima de viento.
 
     """
+    
+    # Cargar configuración desde config.yml
+    with open("config.yml", "r") as file:
+        config = yaml.safe_load(file)
+
     print(" ")
     df = pd.read_csv("dataset_AVAMET.csv")
-    df1,df2,df3,df4 = pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
+    df1,df2,df3,df4,df5,df6 = pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
 
     codes = get_station_codes(df)
     lencodes = len(codes)
@@ -113,15 +118,52 @@ def search_downbursts():
         task = progress.add_task("[cyan]Buscando downbursts...", total=lencodes)
         for code in codes:
 
-            df01 = min_wind_gust(df,station_code=code,variable="vent vel_max",threshold=70)
-            df02 = anomaly_increase_or_decrease_values(df, station_code=code, variable='vent vel_max', threshold=30, time_interval="60min", only_increase=True)
-            df03 = anomaly_increase_or_decrease_values(df, station_code=code, variable='vent vel_mit', threshold=20, time_interval="60min", only_increase=True)
-            df04 = anomaly_increase_or_decrease_values(df, station_code=code, variable='hrel mit_mit', threshold=5, time_interval="30min", only_increase=False)
+            df01 = min_wind_gust(df,
+                                 station_code=code,
+                                 variable="vent vel_max",
+                                 threshold=70)
+            
+            df02 = anomaly_increase_or_decrease_values(df,
+                                                       station_code=code,
+                                                       variable='vent vel_max',
+                                                       threshold=config["detection"]["vent_vel_max"]["threshold"],
+                                                       time_interval=config["detection"]["vent_vel_max"]["time_interval"],
+                                                       only_increase=config["detection"]["vent_vel_max"]["only_increase"])
+            
+            df03 = anomaly_increase_or_decrease_values(df,
+                                                       station_code=code,
+                                                       variable='vent vel_mit',
+                                                       threshold=config["detection"]["vent_vel_mit"]["threshold"],
+                                                       time_interval=config["detection"]["vent_vel_mit"]["time_interval"],
+                                                       only_increase=config["detection"]["vent_vel_mit"]["only_increase"])
+            
+            df04 = anomaly_increase_or_decrease_values(df,
+                                                       station_code=code,
+                                                       variable='hrel mit_mit',
+                                                       threshold=config["detection"]["hrel_mit_mit"]["threshold"],
+                                                       time_interval=config["detection"]["hrel_mit_mit"]["time_interval"],
+                                                       only_increase=config["detection"]["hrel_mit_mit"]["only_increase"])
+            
+            df05 = anomaly_increase_or_decrease_values(df,
+                                                       station_code=code,
+                                                       variable='temp mit_mit',
+                                                       threshold=config["detection"]["temp_mit_mit"]["threshold"],
+                                                       time_interval=config["detection"]["temp_mit_mit"]["time_interval"],
+                                                       only_increase=config["detection"]["temp_mit_mit"]["only_increase"])
+            
+            df06 = anomaly_increase_or_decrease_values(df,  
+                                                       station_code=code,
+                                                       variable='prec tot_sum',
+                                                       threshold=config["detection"]["prec_tot_sum"]["threshold"],
+                                                       time_interval=config["detection"]["prec_tot_sum"]["time_interval"],
+                                                       only_increase=config["detection"]["prec_tot_sum"]["only_increase"])
 
             if not df01.empty:df1 = pd.concat([df1,df01], axis=0)
             if not df02.empty:df2 = pd.concat([df2,df02], axis=0)
             if not df03.empty:df3 = pd.concat([df3,df03], axis=0)
             if not df04.empty:df4 = pd.concat([df4,df04], axis=0)
+            if not df05.empty:df5 = pd.concat([df5,df05], axis=0)
+            if not df06.empty:df6 = pd.concat([df6,df06], axis=0)
             progress.update(task, advance=1) 
 
     dfs = [df1, df2, df3, df4]  # Lista de DataFrames
