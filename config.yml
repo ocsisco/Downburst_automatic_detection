@@ -1,0 +1,10 @@
+# Configuración general
+data:
+  date: null # "2024-06-08"  # Date in format YYYY-MM-DD for testing dates or null for production
+
+# Configuración del modelo de detección
+detection:
+  min_ws: 70 # Minimal 
+  threshold: 0.8  # Umbral de detección
+  window_size: 5  # Tamaño de la ventana para análisis
+  remove_duplicates: true  # Eliminar duplicados en el procesamiento
